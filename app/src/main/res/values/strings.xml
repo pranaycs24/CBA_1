@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CBA</string>
+    <string name="title_name">Can Book Anything</string>
+    <string name="save">Feed Data</string>
+    <string name="retrieve">Fetch Data</string>
+    <string name="cook">Cook</string>
+    <string name="maid">Maid</string>
+    <string name="cp">Carpenter</string>
+    <string name="gd">Gardener</string>
+    <string name="el">Electrician</string>
+    <string name="mec">Mechanic</string>
+    <string name="name_ser">Enter the Name</string>
+    <string name="ph">Enter the Phone Number</string>
+    <string name="ad">Enter the Address</string>
+    <string name="service_area">Enter the Serviceable Area</string>
+    <string name="save_data">Save</string>
+</resources>

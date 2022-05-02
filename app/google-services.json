@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "495598118016",
+    "project_id": "cba-database",
+    "storage_bucket": "cba-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495598118016:android:65da0f7a092e93a297b265",
+        "android_client_info": {
+          "package_name": "com.can.book.anything.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495598118016-ebs1u3nh6uvj50497o5oh3kel3qa3ue7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLMxAMx2vXivVMET74U-_9flloFOs3gx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495598118016-ebs1u3nh6uvj50497o5oh3kel3qa3ue7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
