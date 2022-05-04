@@ -59,8 +59,9 @@ public class FetchData extends AppCompatActivity {
     private void setUpRecycleView() {
         Intent intent = getIntent();
         String from = intent.getStringExtra("from");
+        String cityName = intent.getStringExtra("city");
         textView.setText(from);
-        notebookRef = db.collection(from);
+        notebookRef = db.collection(cityName + "-" + from);
         Query query = notebookRef.orderBy("serviceArea", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<PersonalData> options = new FirestoreRecyclerOptions.Builder<PersonalData>()
                 .setQuery(query, PersonalData.class)

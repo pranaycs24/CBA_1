@@ -15,4 +15,11 @@
     <string name="service_area">Enter the Serviceable Area</string>
     <string name="save_data">Save</string>
     <string name="call">Call Button</string>
+    <string name="user_agree_title">User Agreement</string>
+    <string-array name="planets_array">
+        <item>Bokaro</item>
+        <item>Dhanbad</item>
+        <item>Ranchi</item>
+        <item>Dumka</item>
+    </string-array>
 </resources>

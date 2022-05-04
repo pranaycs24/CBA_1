@@ -5,10 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 public class Category extends AppCompatActivity implements View.OnClickListener {
     private Button cook, maid, carpenter, gardener, electrician, mechanic;
+    private Spinner city;
+    private String cityName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +24,24 @@ public class Category extends AppCompatActivity implements View.OnClickListener 
         gardener = findViewById(R.id.gardener);
         electrician = findViewById(R.id.electric);
         mechanic = findViewById(R.id.mechanic);
+        city = findViewById(R.id.spinner2);
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.planets_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        city.setAdapter(adapter);
+
+        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cityName = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         cook.setOnClickListener(this);
@@ -40,6 +62,7 @@ public class Category extends AppCompatActivity implements View.OnClickListener 
         }else{
             intent = new Intent(Category.this, FetchData.class);
         }
+        intent.putExtra("city", cityName);
         switch (view.getId()){
             case R.id.cook:
                 intent.putExtra("from", "Cook");

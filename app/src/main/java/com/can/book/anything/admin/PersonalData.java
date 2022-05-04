@@ -8,11 +8,13 @@ public class PersonalData {
         /* no needed */
     }
 
-    public PersonalData(String name, String phoneNumber, String address, String serviceArea) {
+    public PersonalData(String name, String phoneNumber, String address,
+                        String serviceArea, String city) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.serviceArea = serviceArea;
+        this.city = city;
     }
 
     @Exclude
@@ -61,4 +63,5 @@ public class PersonalData {
     private String address;
     private String serviceArea;
     private String documentId;
+    private String city;
 }
