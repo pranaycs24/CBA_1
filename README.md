@@ -1,2 +1,2 @@
-# CBA_1
-First Version for NGO
+# Can Book Anything (CBA)
+First Version of Android App for NGO
