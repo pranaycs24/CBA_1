@@ -54,9 +54,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="59dp"
-        android:layout_marginBottom="155dp"
+        android:layout_marginBottom="152dp"
         android:text="@string/el"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/mechanic"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -74,6 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="284dp"
         android:layout_marginTop="16dp"
+        android:background="#2E8BC0"
+        android:popupBackground="#B1D4E0"
         android:contentDescription="City"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"

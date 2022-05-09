@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">CBA</string>
     <string name="title_name">Can Book Anything</string>
-    <string name="save">Feed Data</string>
-    <string name="retrieve">Fetch Data</string>
+    <string name="save">Register for services</string>
+    <string name="retrieve">Search for service providers</string>
     <string name="cook">Cook</string>
     <string name="maid">Maid</string>
     <string name="cp">Carpenter</string>

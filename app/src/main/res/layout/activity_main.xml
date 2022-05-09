@@ -33,7 +33,7 @@
         android:layout_marginTop="158dp"
         android:fontFamily="@font/aclonica"
         android:text="@string/title_name"
-        android:textSize="33sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
