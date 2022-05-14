@@ -15,10 +15,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,47 +80,68 @@ public class FillData extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cityIntent.equals(cityName)) {
+                if (cityIntent.equals(cityName)) {
                     String personName = name.getText().toString();
                     String phoneNumber = phNumber.getText().toString();
                     String personAddress = address.getText().toString();
                     String personServiceArea = serviceArea.getText().toString();
+                    name.setText("");
+                    phNumber.setText("");
+                    address.setText("");
+                    serviceArea.setText("");
+                    boolean[] checkDataExist = {false};
 
+                    db.collection(cityName + "-" + from)
+                            .whereEqualTo("phoneNumber", phoneNumber)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            if (document.getId() != null) {
+                                                Toast.makeText(FillData.this,
+                                                        "Data Already Available", Toast.LENGTH_SHORT).show();
+                                                checkDataExist[0] = true;
+                                                break;
+                                            }
+                                            Log.d(TAG, (document.getId()!=null) + " => " + document.getData());
+                                        }
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
+
+                    if (!checkDataExist[0]) {
 //
-                    PersonalData data = new PersonalData(personName, phoneNumber,
-                            personAddress, personServiceArea, cityName);
+                        PersonalData data = new PersonalData(personName, phoneNumber,
+                                personAddress, personServiceArea, cityName);
 
 //                db.collection(from).document("FirstCook").set(data)
-                    db.collection(cityName + "-" + from).add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(FillData.this, "DataSaved", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(FillData.this, "Error", Toast.LENGTH_SHORT).show();
+                        db.collection(cityName + "-" + from).add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(FillData.this, "DataSaved", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(FillData.this, "Error", Toast.LENGTH_SHORT).show();
 //                                Log.d(TAG, e.toString());
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
-                else
-                    Toast.makeText(FillData.this, "City Mismatched", Toast.LENGTH_SHORT).show();
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void unused) {
-//                                Toast.makeText(FillData.this, "DataSaved", Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Toast.makeText(FillData.this, "Error", Toast.LENGTH_SHORT).show();
-//                                Log.d(TAG, e.toString());
-//                            }
-//                        });
+                    else{
+                        Toast.makeText(FillData.this, "City Mismatched", Toast.LENGTH_SHORT).show();
+                    }
 
-            }
+//
+
+
+                }
+
         });
     }
 }
