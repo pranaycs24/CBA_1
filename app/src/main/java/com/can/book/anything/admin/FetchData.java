@@ -62,7 +62,7 @@ public class FetchData extends AppCompatActivity {
         String cityName = intent.getStringExtra("city");
         textView.setText(from);
         notebookRef = db.collection(cityName + "-" + from);
-        Query query = notebookRef.orderBy("serviceArea", Query.Direction.ASCENDING);
+        Query query = notebookRef.whereEqualTo("verified", true);//.orderBy("serviceArea", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<PersonalData> options = new FirestoreRecyclerOptions.Builder<PersonalData>()
                 .setQuery(query, PersonalData.class)
                 .build();

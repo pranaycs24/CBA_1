@@ -19,13 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class FillData extends AppCompatActivity {
     private TextView header;
@@ -33,12 +29,7 @@ public class FillData extends AppCompatActivity {
     private Button save;
     private Spinner city;
     private String cityName;
-    private static final String TAG = "FillData";
-
-    private static final String KEY_NAME = "personName";
-    private static final String KEY_PH = "personPhoneNumber";
-    private static final String KEY_ADD = "personAddress";
-    private static final String KEY_SERVICE = "personServiceArea";
+    private static final String TAG = "FillData_LOG";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -53,7 +44,6 @@ public class FillData extends AppCompatActivity {
         serviceArea = findViewById(R.id.editTextService);
         city = findViewById(R.id.spinner);
         save = findViewById(R.id.saveData);
-
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.planets_array, android.R.layout.simple_spinner_item);
@@ -89,55 +79,46 @@ public class FillData extends AppCompatActivity {
                     phNumber.setText("");
                     address.setText("");
                     serviceArea.setText("");
-                    boolean[] checkDataExist = {false};
 
-                    db.collection(cityName + "-" + from)
-                            .whereEqualTo("phoneNumber", phoneNumber)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            if (document.getId() != null) {
-                                                Toast.makeText(FillData.this,
-                                                        "Data Already Available", Toast.LENGTH_SHORT).show();
-                                                checkDataExist[0] = true;
-                                                break;
-                                            }
-                                            Log.d(TAG, (document.getId()!=null) + " => " + document.getData());
-                                        }
-                                    } else {
-                                        Log.d(TAG, "Error getting documents: ", task.getException());
-                                    }
-                                }
-                            });
-
-                    if (!checkDataExist[0]) {
-//
+                    if (phoneNumber.equals("")){
+                        Toast.makeText(FillData.this, "Please enter Data", Toast.LENGTH_SHORT).show();
+                    }else {
                         PersonalData data = new PersonalData(personName, phoneNumber,
                                 personAddress, personServiceArea, cityName);
-
-//                db.collection(from).document("FirstCook").set(data)
-                        db.collection(cityName + "-" + from).add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(FillData.this, "DataSaved", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(FillData.this, "Error", Toast.LENGTH_SHORT).show();
-//                                Log.d(TAG, e.toString());
-                            }
-                        });
+                        db.collection(cityName + "-" + from).document(phoneNumber).get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                Toast.makeText(FillData.this, "Data already Available", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                db.collection(cityName + "-" + from).document(phoneNumber).set(data)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void unused) {
+                                                                Toast.makeText(FillData.this, "Data saved -  Verification awaited", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Toast.makeText(FillData.this, "Error", Toast.LENGTH_SHORT).show();
+                                                                Log.d(TAG, e.toString());
+                                                            }
+                                                        });
+                                            }
+                                        } else {
+                                            Log.d(TAG, "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
                     }
                 }
                     else{
                         Toast.makeText(FillData.this, "City Mismatched", Toast.LENGTH_SHORT).show();
                     }
-
-//
 
 
                 }

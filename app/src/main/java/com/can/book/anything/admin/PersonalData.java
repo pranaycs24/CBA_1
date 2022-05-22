@@ -15,6 +15,7 @@ public class PersonalData {
         this.address = address;
         this.serviceArea = serviceArea;
         this.city = city;
+        this.isVerified = false;
     }
 
     @Exclude
@@ -64,4 +65,10 @@ public class PersonalData {
     private String serviceArea;
     private String documentId;
     private String city;
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    private Boolean isVerified;
 }

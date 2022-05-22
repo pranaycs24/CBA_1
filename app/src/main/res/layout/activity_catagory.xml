@@ -74,6 +74,23 @@
         android:layout_below="@+id/gardener"
         android:layout_alignParentRight="true"
         android:layout_marginTop="60dp"/>
+    <Button
+        android:id="@+id/tutor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tut"
+        android:layout_below="@+id/electric"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="60dp"/>
+
+    <Button
+        android:id="@+id/grocery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gro"
+        android:layout_below="@+id/mechanic"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="60dp"/>
 
 
 </RelativeLayout>

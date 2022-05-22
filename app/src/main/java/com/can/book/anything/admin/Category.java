@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 public class Category extends AppCompatActivity implements View.OnClickListener {
-    private Button cook, maid, carpenter, gardener, electrician, mechanic;
+    private Button cook, maid, carpenter, gardener, electrician, mechanic, tutor, grocery;
     private Spinner city;
     private String cityName;
     @Override
@@ -24,6 +24,9 @@ public class Category extends AppCompatActivity implements View.OnClickListener 
         gardener = findViewById(R.id.gardener);
         electrician = findViewById(R.id.electric);
         mechanic = findViewById(R.id.mechanic);
+        tutor = findViewById(R.id.tutor);
+        grocery = findViewById(R.id.grocery);
+
         city = findViewById(R.id.spinner2);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -50,6 +53,8 @@ public class Category extends AppCompatActivity implements View.OnClickListener 
         gardener.setOnClickListener(this);
         electrician.setOnClickListener(this);
         mechanic.setOnClickListener(this);
+        tutor.setOnClickListener(this);
+        grocery.setOnClickListener(this);
     }
 
     @Override
@@ -86,6 +91,14 @@ public class Category extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.mechanic:
                 intent.putExtra("from", "Mechanic");
+                startActivity(intent);
+                break;
+            case R.id.tutor:
+                intent.putExtra("from", "Tutor");
+                startActivity(intent);
+                break;
+            case R.id.grocery:
+                intent.putExtra("from", "Grocery");
                 startActivity(intent);
                 break;
 

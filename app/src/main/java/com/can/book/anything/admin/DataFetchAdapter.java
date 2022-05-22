@@ -28,7 +28,7 @@ public class DataFetchAdapter extends FirestoreRecyclerAdapter<PersonalData, Dat
     @Override
     protected void onBindViewHolder(@NonNull DataFetchHolder holder, int position, @NonNull PersonalData model) {
         holder.texViewName.setText(model.getName());
-        holder.textViewAdd.setText(model.getAddress());
+        holder.textViewAdd.setText(model.getServiceArea());
         holder.buttonCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
